@@ -7,3 +7,4 @@
 - New Screen open after that of chainlit.
 
 ## Options to follow (For Knowledge Purpose)
+- You can create an env inside a project for separating each environment for standard practicing and avoiding redundant usage of same packages.
