@@ -11,7 +11,7 @@ gemini_api_key = os.getenv("GEMINI_API_KEY")
 # Setup 1: Provider
 provider = AsyncOpenAI(
     api_key=gemini_api_key,
-    base_url="https://generativelanguage.google.com/v1beta/openai/",
+    base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
 )
 
 # Setup 2: Model
@@ -29,7 +29,7 @@ run_config = RunConfig(
 
 # Setup 3: Agent
 agent1 = Agent(
-    instructions="You are a helpful assistant that can answer questions and",
+    instructions="You are a helpful assistant that can answer questions and How can I help you?",
     name="Panaversity Support Agent"
 )
 
@@ -39,6 +39,8 @@ result = Runner.run_sync(
     run_config=run_config,
     starting_agent=agent1
 )
+
+print(result.final_output)
 
 @cl.on_chat_start
 async def handle_chat_start():
