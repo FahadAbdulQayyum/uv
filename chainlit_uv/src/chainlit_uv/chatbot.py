@@ -40,13 +40,26 @@ result = Runner.run_sync(
     starting_agent=agent1
 )
 
+@cl.on_chat_start
+async def handle_chat_start():
+    cl.user_session.set("history", [])
+    await cl.Message(content="Hello! I'm the Panaversity Support Agent. How can I help you?").send()
+
 @cl.on_message
 async def main(message: cl.Message):
+    history = cl.user_session.get("history")
+
+    #Standard Interface [{"role": "user", "content": "Hello!"}, {...}]
+    history.append({"role": "user", "content": message.content})
+
     result = await Runner.run(
         agent1,
-        input=message.content,
+        input=history,
         run_config=run_config,
     )
+
+    history.append({"role": "assistant", "content": result.final_output})
+    cl.user_session.set("history", history)
     await cl.Message(
         content=result.final_output,
     ).send()
