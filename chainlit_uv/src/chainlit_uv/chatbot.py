@@ -40,13 +40,13 @@ result = Runner.run_sync(
     starting_agent=agent1
 )
 
-print(result.final_output)
-
-
-# @cl.on_message
-# async def main(message: cl.Message):
-#     # Our custom logic goes here...
-#     # Send a fake response back to the user
-#     await cl.Message(
-#         content=f"Received: {message.content}",
-#     ).send()
+@cl.on_message
+async def main(message: cl.Message):
+    result = await Runner.run(
+        agent1,
+        input=message.content,
+        run_config=run_config,
+    )
+    await cl.Message(
+        content=result.final_output,
+    ).send()
