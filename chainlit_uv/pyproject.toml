@@ -1,0 +1,19 @@
+[project]
+name = "chainlit-uv"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Fahad Abdul Qayyum", email = "fahad.45843@iqra.edu.pk" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "chainlit>=2.5.5",
+]
+
+[project.scripts]
+chainlit-uv = "chainlit_uv:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
