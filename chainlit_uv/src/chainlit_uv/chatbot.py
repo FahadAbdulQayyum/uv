@@ -3,6 +3,7 @@ import chainlit as cl
 
 from dotenv import load_dotenv, find_dotenv
 from agents import Agent, RunConfig, AsyncOpenAI, OpenAIChatCompletionsModel, Runner
+from openai.types.responses import ResponseTextDeltaEvent
 
 load_dotenv(find_dotenv())
 
@@ -16,7 +17,9 @@ provider = AsyncOpenAI(
 
 # Setup 2: Model
 model = OpenAIChatCompletionsModel(
-    model="gemini-2.0-flash",
+    # model="gemini-2.0-flash",
+    # model="gemini-1.5-flash",
+    model="gemini-1.5-pro",
     openai_client=provider,
 )
 
@@ -51,17 +54,38 @@ async def handle_chat_start():
 async def main(message: cl.Message):
     history = cl.user_session.get("history")
 
+    msg = cl.Message(content="")
+    await msg.send()
+
     #Standard Interface [{"role": "user", "content": "Hello!"}, {...}]
     history.append({"role": "user", "content": message.content})
 
-    result = await Runner.run(
+    # result = await Runner.run(
+    #     agent1,
+    #     input=history,
+    #     run_config=run_config,
+    # )
+
+    result = Runner.run_streamed(
+    # result = await Runner.run_streamed(
         agent1,
         input=history,
         run_config=run_config,
     )
 
+    # async for event in result.output_stream():
+    async for event in result.stream_events():
+        if event.type == "raw_response_event" and isinstance(event.data, ResponseTextDeltaEvent):
+            # print(event.data.delta, end="", flush=True)
+            
+            # msg.update(event.data.delta)
+
+            # await msg.streamed_chunk(event.data.delta)
+            # await msg.stream(event.data.delta)
+            await msg.stream_token(event.data.delta)
+
     history.append({"role": "assistant", "content": result.final_output})
     cl.user_session.set("history", history)
-    await cl.Message(
-        content=result.final_output,
-    ).send()
+    # await cl.Message(
+    #     content=result.final_output,
+    # ).send()
