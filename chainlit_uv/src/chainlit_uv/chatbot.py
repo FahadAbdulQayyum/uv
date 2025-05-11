@@ -17,7 +17,7 @@ provider = AsyncOpenAI(
 # Setup 2: Model
 model = OpenAIChatCompletionsModel(
     model="gemini-2.0-flash",
-    provider=provider
+    openai_client=provider,
 )
 
 # Config: Defined at Run Level
@@ -28,7 +28,7 @@ run_config = RunConfig(
 )
 
 # Setup 3: Agent
-agent = Agent(
+agent1 = Agent(
     instructions="You are a helpful assistant that can answer questions and",
     name="Panaversity Support Agent"
 )
@@ -36,7 +36,8 @@ agent = Agent(
 # Setup 4: Run
 result = Runner.run_sync(
     input="What is the capital of Turkey?",
-    run_config=run_config   
+    run_config=run_config,
+    starting_agent=agent1
 )
 
 print(result.final_output)
