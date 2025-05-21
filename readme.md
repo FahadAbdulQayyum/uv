@@ -12,3 +12,4 @@
 ## Options to follow (For Knowledge Purpose)
 - You can create an env inside a project for separating each environment for standard practicing and avoiding redundant usage of same packages by using.
 - For checking the list of env, use `uv venv` command.
+- For creating env using `uv venv <env-name>` e.g., `uv venv --python 3.13`
