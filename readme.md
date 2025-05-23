@@ -1,5 +1,8 @@
 # What This Readme is About?
 
+## How to create UV project
+- Run this command `uv init --package <custom-project-name>` to create project.
+
 ## How to run the Chainlit project using UV
 - Run this command for installing chainlit package: `uv add chainlit`.
 - Create a file as 'chainbot.py' put that code using decorator.
@@ -7,4 +10,5 @@
 - New Screen open after that of chainlit.
 
 ## Options to follow (For Knowledge Purpose)
-- You can create an env inside a project for separating each environment for standard practicing and avoiding redundant usage of same packages.
+- You can create an env inside a project for separating each environment for standard practicing and avoiding redundant usage of same packages by using.
+- For checking the list of env, use `uv env` command.
