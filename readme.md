@@ -14,3 +14,5 @@
 - For checking the list of env, use `uv venv` command.
 - For creating env using `uv venv <env-name>` e.g., `uv venv --python 3.13`
 ![alt text](image.png)
+- For accessing to env, you can use: `.venv\Scripts\activate`, after doing this you can see below image for output:
+![alt text](image-1.png)
